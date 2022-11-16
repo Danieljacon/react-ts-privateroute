@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
 
   const createNewUser = async (newUser: IUser) => {
-    // Adicionar toast de sucesso
+    // Falta: Adicionar toast de sucesso
     nProgress.start();
     try {
       await axios.post(`${APIBASE}/auth/create`, newUser);
@@ -23,10 +23,24 @@ export const AuthProvider = ({ children }: IChildren) => {
     }
   };
 
+  const handleLogin = async (user: IUser) => {
+    // Falta: Enviar para a página de Dashboard
+    nProgress.start();
+    try {
+      const { data } = await axios.post(`${APIBASE}/auth`, user);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      nProgress.done();
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         createNewUser,
+        handleLogin,
       }}
     >
       {children}

@@ -4,11 +4,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { IUser } from "../../utils/interfaces";
 
 export const Login = () => {
-  const { } = useContext(AuthContext);
+  const { handleLogin } = useContext(AuthContext);
   const { register, handleSubmit } = useForm<IUser>();
 
   const onSubmit = (data: IUser) => {
-    console.log(data)
+    handleLogin(data);
   };
 
   return (
