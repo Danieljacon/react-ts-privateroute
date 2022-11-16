@@ -8,6 +8,7 @@ export interface IUser {
 export interface IAuthContext {
   createNewUser: (newUser: IUser) => Promise<void>;
   handleLogin: (user: IUser) => Promise<void>;
+  token: string;
 }
 
 export interface IChildren {

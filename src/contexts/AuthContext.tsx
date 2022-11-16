@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { APIBASE } from "../utils/api";
+import { api } from "../utils/api";
 import { IAuthContext, IChildren, IUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import nProgress from "nprogress";
@@ -14,12 +14,13 @@ export const AuthProvider = ({ children }: IChildren) => {
   );
 
   const createNewUser = async (newUser: IUser) => {
-    // Falta: Adicionar toast de sucesso
+    // Falta: Toast de sucesso
     nProgress.start();
     try {
-      await axios.post(`${APIBASE}/auth/create`, newUser);
+      await api.post("/auth/create", newUser);
       navigate("/");
     } catch (error) {
+      // Falta: Toast de erro
       console.log(error);
     } finally {
       nProgress.done();
@@ -27,19 +28,15 @@ export const AuthProvider = ({ children }: IChildren) => {
   };
 
   const handleLogin = async (user: IUser) => {
-    // Falta: Enviar para a página de Dashboard
     nProgress.start();
     try {
-      const { data } = await axios.post(`${APIBASE}/auth`, user, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
-
+      const { data } = await api.post("/auth", user);
+      api.defaults.headers.common["Authorization"] = token;
       localStorage.setItem("token", data);
       setToken(data);
-      console.log(data);
+      navigate("/dashboard");
     } catch (error) {
+      // Falta: Toast de erro
       console.log(error);
     } finally {
       nProgress.done();
@@ -51,6 +48,7 @@ export const AuthProvider = ({ children }: IChildren) => {
       value={{
         createNewUser,
         handleLogin,
+        token,
       }}
     >
       {children}
