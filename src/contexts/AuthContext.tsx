@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import { APIBASE } from "../utils/api";
 import { IAuthContext, IChildren, IUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,9 @@ export const AuthContext = createContext({} as IAuthContext);
 
 export const AuthProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
+  const [token, setToken] = useState<string>(
+    localStorage.getItem("token") || ""
+  );
 
   const createNewUser = async (newUser: IUser) => {
     // Falta: Adicionar toast de sucesso
@@ -27,7 +30,14 @@ export const AuthProvider = ({ children }: IChildren) => {
     // Falta: Enviar para a página de Dashboard
     nProgress.start();
     try {
-      const { data } = await axios.post(`${APIBASE}/auth`, user);
+      const { data } = await axios.post(`${APIBASE}/auth`, user, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      localStorage.setItem("token", data);
+      setToken(data);
       console.log(data);
     } catch (error) {
       console.log(error);
