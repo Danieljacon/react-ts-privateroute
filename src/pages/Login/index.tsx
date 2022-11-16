@@ -2,16 +2,19 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IUser } from "../../utils/interfaces";
+import { Navigate } from "react-router-dom";
 
 export const Login = () => {
-  const { handleLogin } = useContext(AuthContext);
+  const { handleLogin, token } = useContext(AuthContext);
   const { register, handleSubmit } = useForm<IUser>();
 
   const onSubmit = (data: IUser) => {
     handleLogin(data);
   };
 
-  return (
+  return token ? (
+    <Navigate to="/dashboard" />
+  ) : (
     <div>
       <form className="flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="login">Login</label>
