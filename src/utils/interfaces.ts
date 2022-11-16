@@ -1,10 +1,5 @@
 import React from "react";
 
-export interface IUser {
-  login: string;
-  senha: string;
-}
-
 export interface IAuthContext {
   createNewUser: (newUser: IUser) => Promise<void>;
   handleLogin: (user: IUser) => Promise<void>;
@@ -12,8 +7,19 @@ export interface IAuthContext {
   token: string;
 }
 
+export interface IPeopleContext {
+  getPeople: () => Promise<void>;
+  peopleList: IPeople[];
+  loading: boolean;
+}
+
 export interface IChildren {
   children: React.ReactNode;
+}
+
+export interface IUser {
+  login: string;
+  senha: string;
 }
 
 export interface IPeople {

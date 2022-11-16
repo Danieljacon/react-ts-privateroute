@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }: IChildren) => {
     nProgress.start();
     try {
       const { data } = await api.post("/auth", user);
-      api.defaults.headers.common["Authorization"] = token;
       localStorage.setItem("token", data);
       setToken(data);
       navigate("/dashboard");

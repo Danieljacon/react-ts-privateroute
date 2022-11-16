@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect, useContext } from "react";
+import { PeopleContext } from "../../contexts/PeopleContext";
 
 export const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  const { getPeople, peopleList, loading } = useContext(PeopleContext);
+
+  useEffect(() => {
+    getPeople();
+  }, []);
+
+  useEffect(() => {
+    console.log(peopleList);
+  }, [peopleList]);
+
+  return <div>Dashboard</div>;
+};

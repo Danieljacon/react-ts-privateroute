@@ -4,4 +4,7 @@ export const APIBASE: string =
 
 export const api = axios.create({
   baseURL: APIBASE,
+  headers: {
+    Authorization: localStorage.getItem("token"),
+  },
 });
