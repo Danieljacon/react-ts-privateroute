@@ -3,7 +3,6 @@ import { api } from "../utils/api";
 import { IAuthContext, IChildren, IUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import nProgress from "nprogress";
-import axios from "axios";
 
 export const AuthContext = createContext({} as IAuthContext);
 
@@ -43,11 +42,19 @@ export const AuthProvider = ({ children }: IChildren) => {
     }
   };
 
+  const handleLoggout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    delete api.defaults.headers.common["Authorization"];
+    navigate("/");
+  };
+
   return (
     <AuthContext.Provider
       value={{
         createNewUser,
         handleLogin,
+        handleLoggout,
         token,
       }}
     >

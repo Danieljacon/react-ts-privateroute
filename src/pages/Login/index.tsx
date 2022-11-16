@@ -18,7 +18,7 @@ export const Login = () => {
         <input type="text" {...register("login")} />
         <label htmlFor="senha">Senha</label>
         <input type="text" {...register("senha")} />
-        <input type="submit" value="Cadastrar" />
+        <input type="submit" value="Login" />
       </form>
     </div>
   );

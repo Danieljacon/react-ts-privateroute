@@ -4,6 +4,14 @@ import { Outlet, Navigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export const PrivateRoute = () => {
-  const { token } = useContext(AuthContext);
-  return token ? <Outlet /> : <Navigate to="/" />;
+  const { token, handleLoggout } = useContext(AuthContext);
+
+  return token ? (
+    <div>
+      <button onClick={handleLoggout}>Loggout</button>
+      <Outlet />
+    </div>
+  ) : (
+    <Navigate to="/" />
+  );
 };
