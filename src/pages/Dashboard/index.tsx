@@ -25,7 +25,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <Container centerContent maxW="980px">
+      <Container centerContent maxW="980px" mt={10}>
         <div>
           {loading ? (
             <h1>Carregando...</h1>

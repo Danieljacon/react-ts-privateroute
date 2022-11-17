@@ -1,3 +1,4 @@
+import { Box, Button, Container } from "@chakra-ui/react";
 import React from "react";
 import { useContext } from "react";
 import { Outlet, Navigate, Link, useLocation } from "react-router-dom";
@@ -8,13 +9,23 @@ export const PrivateRoute = () => {
   const { pathname } = useLocation();
 
   return token ? (
-    <div>
-      <button onClick={handleLoggout}>Loggout</button>
-      {pathname.split("/").length > 2 && (
-        <Link to={pathname.split("/").slice(0, -1).join("/")}>Voltar</Link>
-      )}
+    <>
+      <Container centerContent>
+        <Box position="fixed" p={4} bottom="0">
+          <Button colorScheme="messenger" mx="1" onClick={handleLoggout}>
+            Loggout
+          </Button>
+          {pathname.split("/").length > 2 && (
+            <Button colorScheme="messenger" mx="1">
+              <Link to={pathname.split("/").slice(0, -1).join("/")}>
+                Voltar
+              </Link>
+            </Button>
+          )}
+        </Box>
+      </Container>
       <Outlet />
-    </div>
+    </>
   ) : (
     <Navigate to="/" />
   );
