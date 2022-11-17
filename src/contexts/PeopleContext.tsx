@@ -39,17 +39,13 @@ export const PeopleProvider = ({ children }: IChildren) => {
   const addNewPerson = async (person: IPerson) => {
     nProgress.start();
     try {
-      // await api.post("/pessoa", person);
-      await axios.post(
-        `${APIBASE}/pessoa?pagina=0&tamanhoDasPaginas=20`,
-        person,
-        {
+      await axios
+        .post(`${APIBASE}/pessoa`, person, {
           headers: {
             Authorization: token,
           },
-        }
-      );
-      navigate("/dashboard");
+        })
+        .then(() => navigate("/dashboard"));
     } catch (error) {
       console.log(error);
     } finally {
