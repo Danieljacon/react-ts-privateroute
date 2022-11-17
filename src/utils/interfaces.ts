@@ -10,8 +10,10 @@ export interface IAuthContext {
 export interface IPeopleContext {
   getPeople: (page?: string) => Promise<void>
   addNewPerson: (person: IPerson) => Promise<void>;
+  removePerson: (person: number) => Promise<void>
   peopleList: IPeople | null;
   loading: boolean;
+  attState: boolean;
 }
 
 export interface IChildren {

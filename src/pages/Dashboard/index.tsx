@@ -16,16 +16,24 @@ import {
 } from "@chakra-ui/react";
 
 export const Dashboard = () => {
-  const { getPeople, peopleList, loading } = useContext(PeopleContext);
+  const { getPeople, removePerson, peopleList, loading, attState } =
+    useContext(PeopleContext);
   const [page, setPage] = useState<string>("0");
 
   useEffect(() => {
     getPeople(page);
-  }, [page]);
+    console.log(peopleList);
+  }, [page, attState]);
 
   return (
     <>
-      <Container centerContent maxW="980px" mt={10}  opacity="0" animation="slidein 1s ease-in-out forwards">
+      <Container
+        centerContent
+        maxW="980px"
+        mt={10}
+        opacity="0"
+        animation="slidein 1s ease-in-out forwards"
+      >
         <div>
           {loading ? (
             <Box bg="transparent" mt={7}>
@@ -74,7 +82,8 @@ export const Dashboard = () => {
                 mt={3}
                 width="100%"
                 shadow="lg"
-                opacity="0" animation="slidein .5s ease-in-out forwards"
+                opacity="0"
+                animation="slidein .5s ease-in-out forwards"
               >
                 <Thead>
                   <Tr>
@@ -82,6 +91,7 @@ export const Dashboard = () => {
                     <Th>Email</Th>
                     <Th>CPF</Th>
                     <Th>Data de Nascimento</Th>
+                    <Th textAlign="center">Actions</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -91,6 +101,11 @@ export const Dashboard = () => {
                       <Td>{person.email}</Td>
                       <Td>{person.cpf}</Td>
                       <Td>{person.dataNascimento}</Td>
+                      <Td>
+                        <Button colorScheme="red" onClick={() => removePerson(person.idPessoa)}>
+                          Excluir
+                        </Button>
+                      </Td>
                     </Tr>
                   ))}
                 </Tbody>
