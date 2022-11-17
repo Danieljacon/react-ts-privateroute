@@ -23,7 +23,7 @@ export const PeopleProvider = ({ children }: IChildren) => {
     setLoading(true);
     try {
       await axios
-        .get(`${APIBASE}/pessoa?pagina=${page}&tamanhoDasPaginas=10`, {
+        .get(`${APIBASE}/pessoa?pagina=${page}&tamanhoDasPaginas=7`, {
           headers: {
             Authorization: token,
           },
