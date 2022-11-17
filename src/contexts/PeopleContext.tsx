@@ -19,11 +19,11 @@ export const PeopleProvider = ({ children }: IChildren) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { token } = useContext(AuthContext);
 
-  const getPeople = async () => {
+  const getPeople = async (page?: string) => {
     setLoading(true);
     try {
       await axios
-        .get(`${APIBASE}/pessoa?pagina=0&tamanhoDasPaginas=20`, {
+        .get(`${APIBASE}/pessoa?pagina=${page}&tamanhoDasPaginas=10`, {
           headers: {
             Authorization: token,
           },

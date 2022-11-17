@@ -8,7 +8,7 @@ export interface IAuthContext {
 }
 
 export interface IPeopleContext {
-  getPeople: () => Promise<void>;
+  getPeople: (page?: string) => Promise<void>
   addNewPerson: (person: IPerson) => Promise<void>;
   peopleList: IPeople | null;
   loading: boolean;

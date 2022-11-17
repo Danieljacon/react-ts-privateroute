@@ -1,14 +1,16 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { PeopleContext } from "../../contexts/PeopleContext";
 import { IPerson } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const { getPeople, peopleList, loading } = useContext(PeopleContext);
+  const [page, setPage] = useState<string>("0");
 
   useEffect(() => {
-    getPeople();
-  }, []);
+    getPeople(page);
+    console.log(peopleList);
+  }, [page]);
 
   return (
     <>
@@ -37,6 +39,17 @@ export const Dashboard = () => {
               ))}
             </tbody>
           </table>
+        )}
+        {page !== "0" && (
+          <button onClick={() => setPage((parseInt(page) - 1).toString())}>
+            Anterior
+          </button>
+        )}
+        <p>{peopleList?.page}</p>
+        {peopleList?.totalPages !== parseInt(page) + 1 && (
+          <button onClick={() => setPage((parseInt(page) + 1).toString())}>
+            Próximo
+          </button>
         )}
       </div>
     </>
