@@ -2,6 +2,14 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { PeopleContext } from "../../contexts/PeopleContext";
 import { IPerson } from "../../utils/interfaces";
+import {
+  Button,
+  Center,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
 export const AddNewPerson = () => {
   const { addNewPerson } = useContext(PeopleContext);
@@ -10,18 +18,28 @@ export const AddNewPerson = () => {
     addNewPerson(data);
   };
   return (
-    <div>
-      <form className="flex-col" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="nome">Nome</label>
-        <input type="text" {...register("nome")} />
-        <label htmlFor="cpf">CPF</label>
-        <input type="text" {...register("cpf")} />
-        <label htmlFor="email">Email</label>
-        <input type="text" {...register("email")} />
-        <label htmlFor="data">Data</label>
-        <input type="date" {...register("dataNascimento")} />
-        <input type="submit" value="Adicionar" />
-      </form>
-    </div>
+    <Container>
+      <Center minH={"100vh"} display="flex" flexDir="column">
+        <FormControl
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          p={10}
+          borderRadius={20}
+          shadow="lg"
+        >
+          <FormLabel htmlFor="nome">Nome</FormLabel>
+          <Input type="text" {...register("nome")} />
+          <FormLabel htmlFor="cpf">CPF</FormLabel>
+          <Input type="text" {...register("cpf")} />
+          <FormLabel htmlFor="email">Email</FormLabel>
+          <Input type="text" {...register("email")} />
+          <FormLabel htmlFor="data">Data</FormLabel>
+          <Input type="date" {...register("dataNascimento")} />
+          <Button type="submit" w={"full"} colorScheme="messenger" mt={2}>
+            Adicionar
+          </Button>
+        </FormControl>
+      </Center>
+    </Container>
   );
 };
