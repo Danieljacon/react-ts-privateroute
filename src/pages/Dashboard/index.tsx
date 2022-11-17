@@ -6,8 +6,6 @@ import {
   Box,
   Button,
   Container,
-  SkeletonCircle,
-  SkeletonText,
   Spinner,
   Table,
   Tbody,
@@ -23,7 +21,6 @@ export const Dashboard = () => {
 
   useEffect(() => {
     getPeople(page);
-    console.log(peopleList);
   }, [page]);
 
   return (
