@@ -1,8 +1,9 @@
 import React, { createContext, useState } from "react";
-import { api } from "../utils/api";
+import { APIBASE } from "../utils/api";
 import { IAuthContext, IChildren, IUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import nProgress from "nprogress";
+import axios from "axios";
 
 export const AuthContext = createContext({} as IAuthContext);
 
@@ -16,10 +17,10 @@ export const AuthProvider = ({ children }: IChildren) => {
     // Falta: Toast de sucesso
     nProgress.start();
     try {
-      await api.post("/auth/create", newUser);
-      navigate("/");
+      await axios.post(`${APIBASE}/auth/create`, newUser).then(() => {
+        navigate("/");
+      });
     } catch (error) {
-      // Falta: Toast de erro
       console.log(error);
     } finally {
       nProgress.done();
@@ -29,12 +30,12 @@ export const AuthProvider = ({ children }: IChildren) => {
   const handleLogin = async (user: IUser) => {
     nProgress.start();
     try {
-      const { data } = await api.post("/auth", user);
-      localStorage.setItem("token", data);
-      setToken(data);
-      navigate("/dashboard");
+      await axios.post(`${APIBASE}/auth`, user).then((response) => {
+        setToken(response.data);
+        localStorage.setItem("token", response.data);
+        navigate("/dashboard");
+      });
     } catch (error) {
-      // Falta: Toast de erro
       console.log(error);
     } finally {
       nProgress.done();
@@ -44,7 +45,6 @@ export const AuthProvider = ({ children }: IChildren) => {
   const handleLoggout = () => {
     localStorage.removeItem("token");
     setToken("");
-    delete api.defaults.headers.common["Authorization"];
     navigate("/");
   };
 

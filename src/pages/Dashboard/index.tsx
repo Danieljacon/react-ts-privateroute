@@ -12,7 +12,7 @@ export const Dashboard = () => {
 
   return (
     <>
-    <Link  to="/dashboard/new-person">Adicionar nova pessoa</Link>
+      <Link to="/dashboard/new-person">Adicionar nova pessoa</Link>
       <div>
         {loading ? (
           <h1>Carregando...</h1>
