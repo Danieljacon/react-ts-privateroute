@@ -8,12 +8,14 @@ import {
 import { APIBASE } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import { useToast } from '@chakra-ui/react'
 
 import nProgress from "nprogress";
 import axios from "axios";
 
 export const PeopleContext = createContext({} as IPeopleContext);
 export const PeopleProvider = ({ children }: IChildren) => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [peopleList, setPeopleList] = useState<IPeople | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,9 +47,25 @@ export const PeopleProvider = ({ children }: IChildren) => {
             Authorization: token,
           },
         })
-        .then(() => navigate("/dashboard"));
+        .then(() => {
+          navigate("/dashboard");
+
+          toast({
+            title: "Um novo usuário foi adicionado.",
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+        });
     } catch (error) {
       console.log(error);
+
+      toast({
+        title: "Houve algum erro.",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
     } finally {
       nProgress.done();
     }
