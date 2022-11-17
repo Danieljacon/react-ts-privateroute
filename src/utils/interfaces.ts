@@ -9,7 +9,8 @@ export interface IAuthContext {
 
 export interface IPeopleContext {
   getPeople: () => Promise<void>;
-  peopleList: IPeople[];
+  addNewPerson: (person: IPerson) => Promise<void>;
+  peopleList: IPeople | null;
   loading: boolean;
 }
 
@@ -22,9 +23,18 @@ export interface IUser {
   senha: string;
 }
 
-export interface IPeople {
+export interface IPerson {
   nome: string;
   dataNascimento: string;
   cpf: string;
   email: string;
+  idPessoa: number;
+}
+
+export interface IPeople {
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  content: [IPerson];
 }

@@ -1,12 +1,14 @@
-import React, { createContext, useContext, useState } from "react";
-import { IChildren, IPeople, IPeopleContext } from "../utils/interfaces";
+import React, { createContext, useState } from "react";
+import { IChildren, IPeopleContext, IPeople, IPerson } from "../utils/interfaces";
 import { api } from "../utils/api";
-import { AuthContext } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
+
+import nProgress from "nprogress";
 
 export const PeopleContext = createContext({} as IPeopleContext);
 export const PeopleProvider = ({ children }: IChildren) => {
-  const { token } = useContext(AuthContext);
-  const [peopleList, setPeopleList] = useState<IPeople[]>([]);
+  const navigate = useNavigate();
+  const [peopleList, setPeopleList] = useState<IPeople | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getPeople = async () => {
@@ -21,8 +23,22 @@ export const PeopleProvider = ({ children }: IChildren) => {
     }
   };
 
+  const addNewPerson = async (person: IPerson) => {
+    nProgress.start();
+    try {
+      await api.post("/pessoa", person);
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      nProgress.done();
+    }
+  };
+
   return (
-    <PeopleContext.Provider value={{ getPeople, peopleList, loading }}>
+    <PeopleContext.Provider
+      value={{ getPeople, addNewPerson, peopleList, loading }}
+    >
       {children}
     </PeopleContext.Provider>
   );
