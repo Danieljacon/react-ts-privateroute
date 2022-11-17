@@ -35,7 +35,7 @@ export const Login = () => {
           <FormLabel htmlFor="login">Login</FormLabel>
           <Input borderColor="gray.300" type="text" {...register("login")} />
           <FormLabel htmlFor="senha">Senha</FormLabel>
-          <Input borderColor="gray.300" type="text" {...register("senha")} />
+          <Input borderColor="gray.300" type="password" {...register("senha")} />
           <Button w={"full"} colorScheme="messenger" mt={2} type="submit">
             Login
           </Button>

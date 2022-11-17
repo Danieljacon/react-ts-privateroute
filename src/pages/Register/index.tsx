@@ -33,7 +33,7 @@ export const Register = () => {
           <FormLabel htmlFor="login">Login</FormLabel>
           <Input type="text" {...register("login")} />
           <FormLabel htmlFor="senha">Senha</FormLabel>
-          <Input type="text" {...register("senha")} />
+          <Input type="password" {...register("senha")} />
           <Button
             w={"full"}
             colorScheme="messenger"
