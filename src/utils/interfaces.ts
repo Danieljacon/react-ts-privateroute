@@ -11,11 +11,11 @@ export interface IPeopleContext {
   getPeople: (page?: string) => Promise<void>
   addNewPerson: (person: IPerson) => Promise<void>;
   removePerson: (person: number) => Promise<void>;
-  editPerson: (cpf: string, person: IPerson) => Promise<void>;
+  editPerson: (idPessoa: number, person: IPerson) => Promise<void>;
   peopleList: IPeople | null;
   loading: boolean;
   attState: boolean;
-  
+
 }
 
 export interface IChildren {

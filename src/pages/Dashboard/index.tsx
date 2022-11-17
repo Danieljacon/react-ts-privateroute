@@ -106,10 +106,10 @@ export const Dashboard = () => {
                         <Button colorScheme="red" onClick={() => removePerson(person.idPessoa)}>
                           Excluir
                         </Button>
-                        <Button colorScheme="red" onClick={() => {navigate('/edit-person', {state: person})}}>
-                          Excluir
+                        <Button colorScheme="green" mt={1} onClick={() => {navigate('/dashboard/edit-person', {state: person})}}>
+                          Editar
                         </Button>
-                     
+
                       </Td>
                     </Tr>
                   ))}

@@ -106,11 +106,11 @@ export const PeopleProvider = ({ children }: IChildren) => {
 		}
 	};
 
-	const editPerson = async (cpf: string, person: IPerson) => {
+	const editPerson = async (idPessoa: number, person: IPerson) => {
 		nProgress.start();
 		try {
 			await axios
-				.put(`${APIBASE}/pessoa/${cpf}`, person, {
+				.put(`${APIBASE}/pessoa/${idPessoa}`, person, {
 					headers: {
 						Authorization: token,
 					},

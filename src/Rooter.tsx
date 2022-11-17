@@ -22,7 +22,7 @@ export const Router = () => {
                 <Route path="/register" element={<Register />} />
                 <Route element={<PrivateRoute />}>
                   <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/edit-person" element={<EditPerson />} />
+                  <Route path="/dashboard/edit-person" element={<EditPerson />} />
                   <Route
                     path="/dashboard/new-person"
                     element={<AddNewPerson />}
