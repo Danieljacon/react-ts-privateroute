@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { PeopleContext } from "../../contexts/PeopleContext";
 import { IPerson } from "../../utils/interfaces";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,6 +19,7 @@ export const Dashboard = () => {
   const { getPeople, removePerson, peopleList, loading, attState } =
     useContext(PeopleContext);
   const [page, setPage] = useState<string>("0");
+  const navigate = useNavigate()
 
   useEffect(() => {
     getPeople(page);
@@ -105,6 +106,10 @@ export const Dashboard = () => {
                         <Button colorScheme="red" onClick={() => removePerson(person.idPessoa)}>
                           Excluir
                         </Button>
+                        <Button colorScheme="red" onClick={() => {navigate('/edit-person', {state: person})}}>
+                          Excluir
+                        </Button>
+                     
                       </Td>
                     </Tr>
                   ))}
