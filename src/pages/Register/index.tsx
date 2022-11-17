@@ -3,6 +3,14 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IUser } from "../../utils/interfaces";
+import {
+  Button,
+  Center,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
 export const Register = () => {
   const { createNewUser } = useContext(AuthContext);
@@ -13,15 +21,31 @@ export const Register = () => {
   };
 
   return (
-    <div>
-      <form className="flex-col" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="login">Login</label>
-        <input type="text" {...register("login")} />
-        <label htmlFor="senha">Senha</label>
-        <input type="text" {...register("senha")} />
-        <input type="submit" value="Cadastrar" />
-      </form>
-      <Link to="/">Já possui uma conta? Login!</Link>
-    </div>
+    <Container>
+      <Center minH={"100vh"} display="flex" flexDir="column">
+        <FormControl
+          onSubmit={handleSubmit(onSubmit)}
+          as="form"
+          p={10}
+          borderRadius={20}
+          shadow="lg"
+        >
+          <FormLabel htmlFor="login">Login</FormLabel>
+          <Input type="text" {...register("login")} />
+          <FormLabel htmlFor="senha">Senha</FormLabel>
+          <Input type="text" {...register("senha")} />
+          <Button
+            w={"full"}
+            colorScheme="messenger"
+            mt={2}
+            type="submit"
+            value="Cadastrar"
+          >
+            Cadastrar
+          </Button>
+          <Link to="/">Já possui uma conta? Login!</Link>
+        </FormControl>
+      </Center>
+    </Container>
   );
 };
