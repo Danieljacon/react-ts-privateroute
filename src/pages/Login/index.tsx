@@ -24,7 +24,7 @@ export const Login = () => {
     <Navigate to="/dashboard" />
   ) : (
     <Container>
-      <Center minH={"100vh"} display="flex" flexDir="column">
+      <Center minH={"100vh"} display="flex" flexDir="column" opacity="0" animation="slidein 1s ease-in-out forwards">
         <FormControl
           onSubmit={handleSubmit(onSubmit)}
           as="form"

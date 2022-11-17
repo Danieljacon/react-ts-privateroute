@@ -6,6 +6,9 @@ import {
   Box,
   Button,
   Container,
+  SkeletonCircle,
+  SkeletonText,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -25,10 +28,18 @@ export const Dashboard = () => {
 
   return (
     <>
-      <Container centerContent maxW="980px" mt={10}>
+      <Container centerContent maxW="980px" mt={10}  opacity="0" animation="slidein 1s ease-in-out forwards">
         <div>
           {loading ? (
-            <h1>Carregando...</h1>
+            <Box bg="transparent" mt={7}>
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+              />
+            </Box>
           ) : (
             <Box p={10} borderRadius={20} width="100%" shadow="lg">
               <Box
@@ -37,9 +48,7 @@ export const Dashboard = () => {
                 justifyContent="space-between"
               >
                 <Button colorScheme="messenger">
-                    <Link to="/dashboard/new-person">
-                      Adicionar nova pessoa
-                    </Link>
+                  <Link to="/dashboard/new-person">Adicionar nova pessoa</Link>
                 </Button>
                 <Box display="flex" alignItems="center" gap={2}>
                   {page !== "0" && (
@@ -68,6 +77,7 @@ export const Dashboard = () => {
                 mt={3}
                 width="100%"
                 shadow="lg"
+                opacity="0" animation="slidein .5s ease-in-out forwards"
               >
                 <Thead>
                   <Tr>

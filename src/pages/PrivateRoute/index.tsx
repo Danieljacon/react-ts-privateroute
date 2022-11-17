@@ -10,8 +10,8 @@ export const PrivateRoute = () => {
 
   return token ? (
     <>
-      <Container centerContent>
-        <Box position="fixed" p={4} bottom="0">
+      <Container centerContent zIndex={1999}>
+        <Box position="fixed" p={4} bottom="0" zIndex={1999}>
           <Button colorScheme="messenger" mx="1" onClick={handleLoggout}>
             Loggout
           </Button>
