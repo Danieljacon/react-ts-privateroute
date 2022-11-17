@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IUser } from "../../utils/interfaces";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { Container } from "@chakra-ui/react";
 
 export const Login = () => {
   const { handleLogin, token } = useContext(AuthContext);
@@ -15,7 +16,7 @@ export const Login = () => {
   return token ? (
     <Navigate to="/dashboard" />
   ) : (
-    <div>
+    <Container>
       <form className="flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="login">Login</label>
         <input type="text" {...register("login")} />
@@ -23,6 +24,7 @@ export const Login = () => {
         <input type="text" {...register("senha")} />
         <input type="submit" value="Login" />
       </form>
-    </div>
+      <Link to="/register">Não tem uma conta ainda? Registre-se!</Link>
+    </Container>
   );
 };
