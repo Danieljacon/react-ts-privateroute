@@ -100,7 +100,7 @@ export const Dashboard = () => {
                     <Tr key={person.idPessoa}>
                       <Td>{person.nome}</Td>
                       <Td>{person.email}</Td>
-                      <Td>{person.cpf}</Td>
+                      <Td>{person.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</Td>
                       <Td>{person.dataNascimento}</Td>
                       <Td display="flex" flexDir="column" w="100">
                         <Button colorScheme="red" onClick={() => removePerson(person.idPessoa)}>
