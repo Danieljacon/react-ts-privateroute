@@ -9,6 +9,8 @@ import { PrivateRoute } from "./pages/PrivateRoute";
 import { Register } from "./pages/Register";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import { EditPerson } from "./pages/EditPerson";
+import { Details } from "./pages/Details";
+import { AdressProvider } from "./contexts/AdressContext";
 
 export const Router = () => {
   return (
@@ -17,18 +19,24 @@ export const Router = () => {
         <Box>
           <AuthProvider>
             <PeopleProvider>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route element={<PrivateRoute />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/dashboard/edit-person" element={<EditPerson />} />
-                  <Route
-                    path="/dashboard/new-person"
-                    element={<AddNewPerson />}
-                  />
-                </Route>
-              </Routes>
+              <AdressProvider>
+                <Routes>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route
+                      path="/dashboard/edit-person"
+                      element={<EditPerson />}
+                    />
+                    <Route
+                      path="/dashboard/new-person"
+                      element={<AddNewPerson />}
+                    />
+                    <Route path="/dashboard/details" element={<Details />} />
+                  </Route>
+                </Routes>
+              </AdressProvider>
             </PeopleProvider>
           </AuthProvider>
         </Box>

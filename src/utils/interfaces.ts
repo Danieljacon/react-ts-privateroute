@@ -8,14 +8,19 @@ export interface IAuthContext {
 }
 
 export interface IPeopleContext {
-  getPeople: (page?: string) => Promise<void>
+  getPeople: (page?: string) => Promise<void>;
   addNewPerson: (person: IPerson) => Promise<void>;
   removePerson: (person: number) => Promise<void>;
   editPerson: (idPessoa: number, person: IPerson) => Promise<void>;
   peopleList: IPeople | null;
   loading: boolean;
   attState: boolean;
+  totalPages: number;
+}
 
+export interface IAdressContext {
+  getAdressByIdPessoa: (idPessoa: number) => Promise<void>;
+  adressList: IPersonAdress[];
 }
 
 export interface IChildren {
@@ -41,4 +46,15 @@ export interface IPeople {
   totalElements: number;
   totalPages: number;
   content: [IPerson];
+}
+
+export interface IPersonAdress {
+  idEndereco: number;
+  tipo: "RESIDENCIAL, COMERCIAL";
+  logradouro?: string;
+  numero: number;
+  complemento: string;
+  cep: string;
+  estado: string;
+  pais: string;
 }

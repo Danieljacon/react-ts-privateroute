@@ -20,6 +20,7 @@ export const PeopleProvider = ({ children }: IChildren) => {
   const [peopleList, setPeopleList] = useState<IPeople | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [attState, setAttState] = useState<boolean>(false);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const { token } = useContext(AuthContext);
 
   const getPeople = async (page?: string) => {
@@ -31,7 +32,10 @@ export const PeopleProvider = ({ children }: IChildren) => {
             Authorization: token,
           },
         })
-        .then((response) => setPeopleList(response.data));
+        .then((response) => {
+          setPeopleList(response.data);
+          setTotalPages(response.data.totalPages);
+        });
     } catch (error) {
       console.log(error);
     } finally {
@@ -152,6 +156,7 @@ export const PeopleProvider = ({ children }: IChildren) => {
         peopleList,
         loading,
         attState,
+        totalPages,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useMemo } from "react";
 import { PeopleContext } from "../../contexts/PeopleContext";
 import { IPerson } from "../../utils/interfaces";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 export const Dashboard = () => {
-  const { getPeople, removePerson, peopleList, loading, attState } =
+  const { getPeople, removePerson, peopleList, loading, attState, totalPages } =
     useContext(PeopleContext);
   const [page, setPage] = useState<string>("0");
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export const Dashboard = () => {
                   <Link to="/dashboard/new-person">Adicionar nova pessoa</Link>
                 </Button>
                 <Box display="flex" alignItems="center" gap={2}>
-                  {page !== "0" && (
+                  {/* {page !== "0" && (
                     <Button
                       colorScheme="messenger"
                       onClick={() => setPage((parseInt(page) - 1).toString())}
@@ -72,7 +72,7 @@ export const Dashboard = () => {
                     >
                       Próximo
                     </Button>
-                  )}
+                  )} */}
                 </Box>
               </Box>
               <Table
@@ -97,7 +97,15 @@ export const Dashboard = () => {
                 </Thead>
                 <Tbody>
                   {peopleList?.content.map((person: IPerson) => (
-                    <Tr key={person.idPessoa}>
+                    <Tr
+                      key={person.idPessoa}
+                      onClick={() =>
+                        navigate("/dashboard/details", {
+                          state: person,
+                        })
+                      }
+                      _hover={{ cursor: "pointer" }}
+                    >
                       <Td>{person.nome}</Td>
                       <Td>{person.email}</Td>
                       <Td>
