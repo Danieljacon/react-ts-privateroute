@@ -18,7 +18,7 @@ import { schemaPeople } from "../../utils/schemas";
 
 export const AddNewPerson = () => {
   const { addNewPerson } = useContext(PeopleContext);
-  const { register, handleSubmit, formState: {errors} } = useForm<IPerson>({
+  const { register, handleSubmit, formState: {errors}} = useForm<IPerson>({
     resolver: yupResolver(schemaPeople),
   });
   const onSubmit = (data: IPerson) => {

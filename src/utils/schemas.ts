@@ -19,7 +19,7 @@ export const schemaPeople = yup
 			.string()
 			.required("O nome não pode ser vazio.")
 			.min(3, "O nome deve ter no mínimo 3 caracteres"),
-		dataNascimento: yup.string().required("A data não pode ser vazia."),
+		dataNascimento: yup.string().required("A data precisa ser válida."),
 		cpf: yup
 			.string()
 			.required("O CPF não pode ser vazio.")
