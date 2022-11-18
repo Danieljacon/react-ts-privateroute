@@ -102,7 +102,7 @@ export const Dashboard = () => {
                       <Td>{person.email}</Td>
                       <Td>{person.cpf}</Td>
                       <Td>{person.dataNascimento}</Td>
-                      <Td>
+                      <Td display="flex" flexDir="column" w="100">
                         <Button colorScheme="red" onClick={() => removePerson(person.idPessoa)}>
                           Excluir
                         </Button>
