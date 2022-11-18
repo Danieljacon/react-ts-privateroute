@@ -10,20 +10,39 @@ export const PrivateRoute = () => {
 
   return token ? (
     <>
-      <Container centerContent zIndex={1999}>
-        <Box position="fixed" p={4} bottom="0" zIndex={1999}>
-          <Button colorScheme="messenger" mx="1" onClick={handleLoggout}>
-            Loggout
-          </Button>
-          {pathname.split("/").length > 2 && (
-            <Button colorScheme="messenger" mx="1">
-              <Link to={pathname.split("/").slice(0, -1).join("/")}>
-                Voltar
-              </Link>
+      <header>
+        <Container centerContent zIndex={1999} transition="all .5s ease">
+          <Box
+            position="fixed"
+            p={2}
+            bg="white"
+            top={3}
+            borderRadius={8}
+            zIndex={1999}
+            boxShadow="md"
+          >
+            <Button
+              colorScheme="messenger"
+              mx="1"
+              onClick={handleLoggout}
+              animation="opacity .5s ease-in-out forwards"
+            >
+              Loggout
             </Button>
-          )}
-        </Box>
-      </Container>
+            {pathname.split("/").length > 2 && (
+              <Button
+                colorScheme="messenger"
+                mx="1"
+                animation="opacity .5s ease-in-out forwards"
+              >
+                <Link to={pathname.split("/").slice(0, -1).join("/")}>
+                  Voltar
+                </Link>
+              </Button>
+            )}
+          </Box>
+        </Container>
+      </header>
       <Outlet />
     </>
   ) : (
