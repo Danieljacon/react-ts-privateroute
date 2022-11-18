@@ -15,18 +15,32 @@ import {
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaPeople } from "../../utils/schemas";
+import InputMask from "react-input-mask";
 
 export const AddNewPerson = () => {
   const { addNewPerson } = useContext(PeopleContext);
-  const { register, handleSubmit, formState: {errors}} = useForm<IPerson>({
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IPerson>({
     resolver: yupResolver(schemaPeople),
   });
+
   const onSubmit = (data: IPerson) => {
     addNewPerson(data);
   };
+
   return (
     <Container>
-      <Center minH={"100vh"} display="flex" flexDir="column" opacity="0" animation="slidein 1s ease-in-out forwards">
+      <Center
+        minH={"100vh"}
+        display="flex"
+        flexDir="column"
+        opacity="0"
+        animation="slidein 1s ease-in-out forwards"
+      >
         <FormControl
           as="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -43,7 +57,12 @@ export const AddNewPerson = () => {
             </Alert>
           )}
           <FormLabel htmlFor="cpf">CPF</FormLabel>
-          <Input type="text" {...register("cpf")} />
+          <Input
+            as={InputMask}
+            mask="999.999.999-99"
+            type="text"
+            {...register("cpf")}
+          />
           {errors.cpf && (
             <Alert status="error" borderRadius={8} mt={1}>
               <AlertIcon />
@@ -68,7 +87,7 @@ export const AddNewPerson = () => {
               <AlertTitle>{errors.dataNascimento.message}</AlertTitle>
             </Alert>
           )}
-          
+
           <Button type="submit" w={"full"} colorScheme="messenger" mt={2}>
             Adicionar
           </Button>
