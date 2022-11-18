@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { PeopleContext } from "../../contexts/PeopleContext";
 import { IPerson } from "../../utils/interfaces";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,7 +19,7 @@ export const Dashboard = () => {
   const { getPeople, removePerson, peopleList, loading, attState } =
     useContext(PeopleContext);
   const [page, setPage] = useState<string>("0");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPeople(page);
@@ -100,16 +100,31 @@ export const Dashboard = () => {
                     <Tr key={person.idPessoa}>
                       <Td>{person.nome}</Td>
                       <Td>{person.email}</Td>
-                      <Td>{person.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</Td>
+                      <Td>
+                        {person.cpf.replace(
+                          /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                          "$1.$2.$3-$4"
+                        )}
+                      </Td>
                       <Td>{person.dataNascimento}</Td>
                       <Td display="flex" flexDir="column" w="100">
-                        <Button colorScheme="red" onClick={() => removePerson(person.idPessoa)}>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => removePerson(person.idPessoa)}
+                        >
                           Excluir
                         </Button>
-                        <Button colorScheme="green" mt={1} onClick={() => {navigate('/dashboard/edit-person', {state: person})}}>
+                        <Button
+                          colorScheme="green"
+                          mt={1}
+                          onClick={() => {
+                            navigate("/dashboard/edit-person", {
+                              state: person,
+                            });
+                          }}
+                        >
                           Editar
                         </Button>
-
                       </Td>
                     </Tr>
                   ))}

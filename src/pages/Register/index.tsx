@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IUser } from "../../utils/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 import {
   Alert,
