@@ -6,7 +6,7 @@ import { IContact } from '../../utils/interfaces';
 import { schemaContact } from '../../utils/schemas';
 
 export const AddContact = () => {
-    const {addContact} = useContext(ContactContext)
+    const {addNeWContact} = useContext(ContactContext)
     const { register, handleSubmit, formState: {errors}} = useForm<IContact>({
         resolver: yupResolver(schemaContact),
       });
