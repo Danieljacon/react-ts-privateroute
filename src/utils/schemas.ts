@@ -31,6 +31,7 @@ export const schemaPeople = yup
 	})
 	.required();
 
+<<<<<<< HEAD
 	export const schemaAdress = yup.object().shape({
 		tipo: yup.string().required("O tipo é obrigatório."),
 		logradouro: yup
@@ -56,3 +57,22 @@ export const schemaPeople = yup
 		  .min(2, "É necessário ter, no mínimo, 2 caracteres.")
 		  .required("O país é obrigatório."),
 	  });
+=======
+	export const schemaContact = yup
+	.object({
+		nome: yup
+			.string()
+			.required("O nome não pode ser vazio.")
+			.min(3, "O nome deve ter no mínimo 3 caracteres"),
+		dataNascimento: yup.string().required("A data precisa ser válida."),
+		cpf: yup
+			.string()
+			.required("O CPF não pode ser vazio.")
+			.min(11, "O CPF deve ter no mínimo 11 números"),
+		email: yup
+			.string()
+			.email("O campo precisa ser um email válido")
+			.required("O email não pode ser vazio."),
+	})
+	.required();
+>>>>>>> origin/gicelly
