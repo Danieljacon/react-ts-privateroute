@@ -40,7 +40,7 @@ export const AdressProvider = ({ children }: IChildren) => {
           },
         })
         .then(() => {
-          navigate("/details");
+          navigate("/dashboard/details");
 
           toast({
             title: "O usuário foi editado.",
@@ -62,8 +62,44 @@ export const AdressProvider = ({ children }: IChildren) => {
       nProgress.done();
     }
   };
+
+  const deleteAdressByIdAdress = async (idAdress: number) => {
+    nProgress.start();
+    try {
+      await axios
+        .delete(`${APIBASE}/endereco/${idAdress}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(() => {
+          navigate("/dashboard/details");
+
+          toast({
+            title: "O usuário foi deletado.",
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+
+      toast({
+        title: "Houve algum erro.",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    } finally {
+      nProgress.done();
+    }
+  };
+
   return (
-    <AdressContext.Provider value={{ getAdressByIdPessoa, getAdressByAdress, adressList }}>
+    <AdressContext.Provider
+      value={{ getAdressByIdPessoa, getAdressByAdress, adressList }}
+    >
       {children}
     </AdressContext.Provider>
   );
