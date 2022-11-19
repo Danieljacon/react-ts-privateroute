@@ -1,12 +1,19 @@
 import { Box, Button, Container } from "@chakra-ui/react";
 import React from "react";
 import { useContext } from "react";
-import { Outlet, Navigate, Link, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  Navigate,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export const PrivateRoute = () => {
   const { token, handleLoggout } = useContext(AuthContext);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   return token ? (
     <>
@@ -34,10 +41,11 @@ export const PrivateRoute = () => {
                 colorScheme="messenger"
                 mx="1"
                 animation="opacity .5s ease-in-out forwards"
+                onClick={() => {
+                  navigate(-1);
+                }}
               >
-                <Link to={pathname.split("/").slice(0, -1).join("/")}>
-                  Voltar
-                </Link>
+                Voltar
               </Button>
             )}
           </Box>

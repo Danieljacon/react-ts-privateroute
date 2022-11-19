@@ -20,7 +20,15 @@ export interface IPeopleContext {
 
 export interface IAdressContext {
   getAdressByIdPessoa: (idPessoa: number) => Promise<void>;
-  getAdressByAdress: (idAdress: number, adress: IPersonAdress) => Promise<void>;
+  editAdressByEndereco: (
+    idAdress: number,
+    adress: IPersonAdress
+  ) => Promise<void>;
+  deleteAdressByIdEndereco: (idAdress: number) => Promise<void>;
+  addAdressByIdPessoa: (
+    idPerson: number,
+    adress: IPersonAdress
+  ) => Promise<void>;
   adressList: IPersonAdress[];
 }
 
@@ -55,7 +63,9 @@ export interface IPersonAdress {
   logradouro?: string;
   numero: number;
   complemento: string;
-  cep: string;
+  cep: number;
   estado: string;
   pais: string;
+  idPessoa: number;
+  cidade: string;
 }

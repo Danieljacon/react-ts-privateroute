@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState } from "react";
 import { APIBASE } from "../utils/api";
 import { IAdressContext, IChildren, IPersonAdress } from "../utils/interfaces";
 import { AuthContext } from "./AuthContext";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import axios from "axios";
 import nProgress from "nprogress";
 
 export const AdressContext = createContext({} as IAdressContext);
@@ -30,7 +30,10 @@ export const AdressProvider = ({ children }: IChildren) => {
     }
   };
 
-  const getAdressByAdress = async (idAdress: number, adress: IPersonAdress) => {
+  const editAdressByEndereco = async (
+    idAdress: number,
+    adress: IPersonAdress
+  ) => {
     nProgress.start();
     try {
       axios
@@ -63,7 +66,7 @@ export const AdressProvider = ({ children }: IChildren) => {
     }
   };
 
-  const deleteAdressByIdAdress = async (idAdress: number) => {
+  const deleteAdressByIdEndereco = async (idAdress: number) => {
     nProgress.start();
     try {
       await axios
@@ -96,9 +99,51 @@ export const AdressProvider = ({ children }: IChildren) => {
     }
   };
 
+  const addAdressByIdPessoa = async (
+    idPerson: number,
+    adress: IPersonAdress
+  ) => {
+    nProgress.start();
+    try {
+      await axios
+        .post(`${APIBASE}/endereco/${idPerson}?idPessoa=${idPerson}`, adress, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(() => {
+          navigate(-1);
+
+          toast({
+            title: "Um novo usuário foi adicionado.",
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+
+      toast({
+        title: "Houve algum erro.",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    } finally {
+      nProgress.done();
+    }
+  };
+
   return (
     <AdressContext.Provider
-      value={{ getAdressByIdPessoa, getAdressByAdress, adressList }}
+      value={{
+        getAdressByIdPessoa,
+        editAdressByEndereco,
+        deleteAdressByIdEndereco,
+        addAdressByIdPessoa,
+        adressList,
+      }}
     >
       {children}
     </AdressContext.Provider>

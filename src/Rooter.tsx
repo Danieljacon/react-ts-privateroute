@@ -11,6 +11,7 @@ import { Box, ChakraProvider } from "@chakra-ui/react";
 import { EditPerson } from "./pages/EditPerson";
 import { Details } from "./pages/Details";
 import { AdressProvider } from "./contexts/AdressContext";
+import { NewAdress } from "./pages/NewAdress";
 
 export const Router = () => {
   return (
@@ -34,6 +35,7 @@ export const Router = () => {
                       element={<AddNewPerson />}
                     />
                     <Route path="/dashboard/details" element={<Details />} />
+                    <Route path="/dashboard/details/new-adress" element={<NewAdress />} />
                   </Route>
                 </Routes>
               </AdressProvider>

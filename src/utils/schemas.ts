@@ -30,3 +30,29 @@ export const schemaPeople = yup
 			.required("O email não pode ser vazio."),
 	})
 	.required();
+
+	export const schemaAdress = yup.object().shape({
+		tipo: yup.string().required("O tipo é obrigatório."),
+		logradouro: yup
+		  .string()
+		  .min(3, "É necessário ter, no mínimo, 3 caracteres.")
+		  .required("O logradouro é obrigatório."),
+		numero: yup.string().required("O número é obrigatório."),
+		complemento: yup.string(),
+		cep: yup
+		  .string()
+		  .min(8, "É necessário ter, no mínimo, 3 caracteres.")
+		  .required("O CEP é obrigatório."),
+		cidade: yup
+		  .string()
+		  .min(2, "É necessário ter, no mínimo, 2 caracteres.")
+		  .required("A cidade é obrigatória."),
+		estado: yup
+		  .string()
+		  .min(2, "É necessário ter, no mínimo, 2 caracteres.")
+		  .required("O estado é obrigatório."),
+		pais: yup
+		  .string()
+		  .min(2, "É necessário ter, no mínimo, 2 caracteres.")
+		  .required("O país é obrigatório."),
+	  });

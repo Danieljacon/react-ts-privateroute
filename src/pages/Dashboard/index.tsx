@@ -57,7 +57,7 @@ export const Dashboard = () => {
                   <Link to="/dashboard/new-person">Adicionar nova pessoa</Link>
                 </Button>
                 <Box display="flex" alignItems="center" gap={2}>
-                  {/* {page !== "0" && (
+                  {page !== "0" && (
                     <Button
                       colorScheme="messenger"
                       onClick={() => setPage((parseInt(page) - 1).toString())}
@@ -72,7 +72,7 @@ export const Dashboard = () => {
                     >
                       Próximo
                     </Button>
-                  )} */}
+                  )}
                 </Box>
               </Box>
               <Table
