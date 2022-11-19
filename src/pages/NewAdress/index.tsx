@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Center,
@@ -34,7 +34,6 @@ export const NewAdress = () => {
     resolver: yupResolver(schemaAdress),
   });
 
-  // watch cep and numero fields
   const onSubmit = (data: IPersonAdress) => {
     data.numero = Number(data.numero);
     data.cep = Number(data.cep);
