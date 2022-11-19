@@ -23,7 +23,6 @@ export const Dashboard = () => {
 
   useEffect(() => {
     getPeople(page);
-    console.log(peopleList);
   }, [page, attState]);
 
   return (

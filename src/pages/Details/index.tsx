@@ -90,75 +90,79 @@ export const Details = () => {
 
           <TabPanels>
             <TabPanel>
-              <TableContainer>
-                <Table
-                  size="sm"
-                  variant="striped"
-                  colorScheme="messenger"
-                  borderRadius={20}
-                  mt={3}
-                  width="100%"
-                  shadow="lg"
-                  opacity="0"
-                  animation="slidein .5s ease-in-out forwards"
-                >
-                  <Thead>
-                    <Tr>
-                      <Th>CEP</Th>
-                      <Th>Cidade</Th>
-                      <Th>Complemento</Th>
-                      <Th>Estado</Th>
-                      <Th>Logradouro</Th>
-                      <Th>Número</Th>
-                      <Th>Tipo</Th>
-                      <Th>País</Th>
-                      <Th textAlign="center">Actions</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {adressList?.map((adress: IPersonAdress) => (
-                      <Tr key={adress.idEndereco}>
-                        <Td>
-                          {adress.cep
-                            .toString()
-                            .replace(/(\d{5})(\d{3})/, "$1-$2")}
-                        </Td>
-                        <Td>{adress.cidade}</Td>
-                        <Td>{adress.complemento}</Td>
-                        <Td>{adress.estado}</Td>
-                        <Td>{adress.logradouro}</Td>
-                        <Td>{adress.numero}</Td>
-                        <Td>{adress.tipo}</Td>
-                        <Td>{adress.pais}</Td>
-                        <Td display="flex" flexDir="column" w="100">
-                          <Button
-                            colorScheme="green"
-                            mb={1}
-                            onClick={() =>
-                              navigate("/dashboard/details/edit-adress", {
-                                state: {
-                                  ...adress,
-                                  idPessoa: state.idPessoa,
-                                },
-                              })
-                            }
-                          >
-                            Editar
-                          </Button>
-                          <Button
-                            colorScheme="red"
-                            onClick={() => {
-                              deleteAdressByIdEndereco(adress.idEndereco);
-                            }}
-                          >
-                            Excluir
-                          </Button>
-                        </Td>
+              {adressList.length > 0 ? (
+                <TableContainer>
+                  <Table
+                    size="sm"
+                    variant="striped"
+                    colorScheme="messenger"
+                    borderRadius={20}
+                    mt={3}
+                    width="100%"
+                    shadow="lg"
+                    opacity="0"
+                    animation="slidein .5s ease-in-out forwards"
+                  >
+                    <Thead>
+                      <Tr>
+                        <Th>CEP</Th>
+                        <Th>Cidade</Th>
+                        <Th>Complemento</Th>
+                        <Th>Estado</Th>
+                        <Th>Logradouro</Th>
+                        <Th>Número</Th>
+                        <Th>Tipo</Th>
+                        <Th>País</Th>
+                        <Th textAlign="center">Actions</Th>
                       </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
-              </TableContainer>
+                    </Thead>
+                    <Tbody>
+                      {adressList?.map((adress: IPersonAdress) => (
+                        <Tr key={adress.idEndereco}>
+                          <Td>
+                            {adress.cep
+                              .toString()
+                              .replace(/(\d{5})(\d{3})/, "$1-$2")}
+                          </Td>
+                          <Td>{adress.cidade}</Td>
+                          <Td>{adress.complemento}</Td>
+                          <Td>{adress.estado}</Td>
+                          <Td>{adress.logradouro}</Td>
+                          <Td>{adress.numero}</Td>
+                          <Td>{adress.tipo}</Td>
+                          <Td>{adress.pais}</Td>
+                          <Td display="flex" flexDir="column" w="100">
+                            <Button
+                              colorScheme="green"
+                              mb={1}
+                              onClick={() =>
+                                navigate("/dashboard/details/edit-adress", {
+                                  state: {
+                                    ...adress,
+                                    idPessoa: state.idPessoa,
+                                  },
+                                })
+                              }
+                            >
+                              Editar
+                            </Button>
+                            <Button
+                              colorScheme="red"
+                              onClick={() => {
+                                deleteAdressByIdEndereco(adress.idEndereco);
+                              }}
+                            >
+                              Excluir
+                            </Button>
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <div>Nenhum dado adicionado!</div>
+              )}
             </TabPanel>
             <TabPanel>
               <p>two!</p>
