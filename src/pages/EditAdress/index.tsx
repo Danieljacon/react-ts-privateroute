@@ -17,6 +17,7 @@ import { AdressContext } from "../../contexts/AdressContext";
 import { IPersonAdress } from "../../utils/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaAdress } from "../../utils/schemas";
+import InputMask from "react-input-mask";
 
 export const EditAdress = () => {
   const { state } = useLocation();
@@ -37,15 +38,16 @@ export const EditAdress = () => {
       pais: state.pais,
       tipo: state.tipo,
     },
-    // resolver: yupResolver(schemaAdress),
+    resolver: yupResolver(schemaAdress),
   });
 
   const onSubmit = (data: IPersonAdress) => {
     data.numero = Number(data.numero);
-    data.cep = Number(data.cep);
+    let cpf = data.cep.toString().replace(/\D/g, "");
+    // transformar cpf em um numero
+    data.cep = Number(cpf);
 
-    // console.log(state);
-
+    // data.cep = Number(data.cep);
     editAdressByEndereco(state.idEndereco, {
         ...data,
         idPessoa: state.idPessoa,
@@ -73,7 +75,7 @@ export const EditAdress = () => {
         >
           <div>
             <FormLabel>CEP</FormLabel>
-            <Input type="number" {...register("cep")} min="0" />
+            <Input as={InputMask} mask="99999-999" type="text" {...register("cep")} min="0" />
             {errors.cep && (
               <Alert status="error" borderRadius={8} mt={1}>
                 <AlertIcon />
@@ -190,7 +192,7 @@ export const EditAdress = () => {
             )}
           </div>
 
-          <Button type="submit" w={"full"} colorScheme="messenger" mt={2}>
+          <Button type="submit" w={"full"} colorScheme="messenger" mt={2} gridColumn="span 2">
             Editar
           </Button>
         </FormControl>

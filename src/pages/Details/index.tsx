@@ -19,6 +19,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { IPersonAdress } from "../../utils/interfaces";
+import { PeopleContext } from "../../contexts/PeopleContext";
 
 export const Details = () => {
   const { state } = useLocation();
@@ -30,13 +31,11 @@ export const Details = () => {
     deleteAdressByIdEndereco,
   } = useContext(AdressContext);
 
+  const { removePerson } = useContext(PeopleContext);
+
   useEffect(() => {
     getAdressByIdPessoa(state.idPessoa);
   }, [attState]);
-
-  useEffect(() => {
-    console.log(adressList);
-  }, [adressList]);
 
   return (
     <Container
@@ -47,15 +46,40 @@ export const Details = () => {
       animation="slidein 1s ease-in-out forwards"
     >
       <Box p={10} borderRadius={20} width="100%" shadow="lg">
-        <Box display="flex" alignItems="center">
-          <Button
-            onClick={() =>
-              navigate(`/dashboard/details/new-adress`, { state: state })
-            }
-            colorScheme="messenger"
-          >
-            Adicionar novo endereço
-          </Button>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={2}
+        >
+          <Box display="flex" gap={2}>
+            <Button
+              onClick={() =>
+                navigate(`/dashboard/details/new-adress`, { state: state })
+              }
+              colorScheme="messenger"
+            >
+              Adicionar novo endereço
+            </Button>
+          </Box>
+          <Box display="flex" gap={2}>
+            <Button
+              colorScheme="green"
+              onClick={() => {
+                navigate("/dashboard/edit-person", {
+                  state: state,
+                });
+              }}
+            >
+              Editar pessoa
+            </Button>
+            <Button
+              colorScheme="red"
+              onClick={() => removePerson(state.idPessoa)}
+            >
+              Excluir pessoa
+            </Button>
+          </Box>
         </Box>
 
         <Tabs isFitted variant="enclosed" mt={4}>
@@ -94,7 +118,11 @@ export const Details = () => {
                   <Tbody>
                     {adressList?.map((adress: IPersonAdress) => (
                       <Tr key={adress.idEndereco}>
-                        <Td>{adress.cep}</Td>
+                        <Td>
+                          {adress.cep
+                            .toString()
+                            .replace(/(\d{5})(\d{3})/, "$1-$2")}
+                        </Td>
                         <Td>{adress.cidade}</Td>
                         <Td>{adress.complemento}</Td>
                         <Td>{adress.estado}</Td>
@@ -104,16 +132,8 @@ export const Details = () => {
                         <Td>{adress.pais}</Td>
                         <Td display="flex" flexDir="column" w="100">
                           <Button
-                            colorScheme="red"
-                            onClick={() => {
-                              deleteAdressByIdEndereco(adress.idEndereco);
-                            }}
-                          >
-                            Excluir
-                          </Button>
-                          <Button
                             colorScheme="green"
-                            mt={1}
+                            mb={1}
                             onClick={() =>
                               navigate("/dashboard/details/edit-adress", {
                                 state: {
@@ -124,6 +144,14 @@ export const Details = () => {
                             }
                           >
                             Editar
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={() => {
+                              deleteAdressByIdEndereco(adress.idEndereco);
+                            }}
+                          >
+                            Excluir
                           </Button>
                         </Td>
                       </Tr>

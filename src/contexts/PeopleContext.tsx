@@ -122,7 +122,7 @@ export const PeopleProvider = ({ children }: IChildren) => {
           },
         })
         .then(() => {
-          navigate("/dashboard");
+          navigate(-1);
           setAttState((state) => !state);
 
           toast({

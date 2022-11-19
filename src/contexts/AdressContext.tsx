@@ -47,7 +47,7 @@ export const AdressProvider = ({ children }: IChildren) => {
           navigate(-1);
 
           toast({
-            title: "O usuário foi editado.",
+            title: "O endereço foi editado.",
             status: "success",
             duration: 6000,
             isClosable: true,
@@ -80,7 +80,7 @@ export const AdressProvider = ({ children }: IChildren) => {
           setAttState((state) => !state);
 
           toast({
-            title: "O usuário foi deletado.",
+            title: "O endereço foi deletado.",
             status: "success",
             duration: 6000,
             isClosable: true,
@@ -116,7 +116,7 @@ export const AdressProvider = ({ children }: IChildren) => {
           navigate(-1);
 
           toast({
-            title: "Um novo usuário foi adicionado.",
+            title: "Um novo endereço foi adicionado.",
             status: "success",
             duration: 6000,
             isClosable: true,

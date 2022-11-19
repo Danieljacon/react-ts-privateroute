@@ -77,7 +77,6 @@ export const Dashboard = () => {
               </Box>
               <Table
                 size="md"
-                variant="striped"
                 colorScheme="messenger"
                 borderRadius={20}
                 mt={3}
@@ -92,7 +91,6 @@ export const Dashboard = () => {
                     <Th>Email</Th>
                     <Th>CPF</Th>
                     <Th>Data de Nascimento</Th>
-                    <Th textAlign="center">Actions</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -104,7 +102,10 @@ export const Dashboard = () => {
                           state: person,
                         })
                       }
-                      _hover={{ cursor: "pointer" }}
+                      _hover={{
+                        cursor: "pointer",
+                        backgroundColor: "blue.100",
+                      }}
                     >
                       <Td>{person.nome}</Td>
                       <Td>{person.email}</Td>
@@ -114,25 +115,11 @@ export const Dashboard = () => {
                           "$1.$2.$3-$4"
                         )}
                       </Td>
-                      <Td>{person.dataNascimento}</Td>
-                      <Td display="flex" flexDir="column" w="100">
-                        <Button
-                          colorScheme="red"
-                          onClick={() => removePerson(person.idPessoa)}
-                        >
-                          Excluir
-                        </Button>
-                        <Button
-                          colorScheme="green"
-                          mt={1}
-                          onClick={() => {
-                            navigate("/dashboard/edit-person", {
-                              state: person,
-                            });
-                          }}
-                        >
-                          Editar
-                        </Button>
+                      <Td>
+                        {person.dataNascimento.replace(
+                          /(\d{4})-(\d{2})-(\d{2})/,
+                          "$3/$2/$1"
+                        )}
                       </Td>
                     </Tr>
                   ))}

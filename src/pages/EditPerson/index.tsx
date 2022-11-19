@@ -81,15 +81,6 @@ export const EditPerson = () => {
 						</Alert>
 					)}
 
-					<FormLabel htmlFor="cpf">CPF</FormLabel>
-					<Input
-						borderColor="gray.300"
-						type="text"
-						disabled
-						{...register("cpf")}
-					/>
-					<Input type="text" {...register("cpf")} />
-					
 					<FormLabel htmlFor="dataNascimento">
 						Data de nascimento
 					</FormLabel>
