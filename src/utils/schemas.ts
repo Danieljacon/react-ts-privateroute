@@ -30,3 +30,21 @@ export const schemaPeople = yup
 			.required("O email não pode ser vazio."),
 	})
 	.required();
+
+	export const schemaContact = yup
+	.object({
+		nome: yup
+			.string()
+			.required("O nome não pode ser vazio.")
+			.min(3, "O nome deve ter no mínimo 3 caracteres"),
+		dataNascimento: yup.string().required("A data precisa ser válida."),
+		cpf: yup
+			.string()
+			.required("O CPF não pode ser vazio.")
+			.min(11, "O CPF deve ter no mínimo 11 números"),
+		email: yup
+			.string()
+			.email("O campo precisa ser um email válido")
+			.required("O email não pode ser vazio."),
+	})
+	.required();
