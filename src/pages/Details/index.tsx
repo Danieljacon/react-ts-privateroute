@@ -18,16 +18,17 @@ import {
   Tr,
   TableContainer,
 } from "@chakra-ui/react";
-import { IPerson, IPersonAdress } from "../../utils/interfaces";
+import { IPersonAdress } from "../../utils/interfaces";
 
 export const Details = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { adressList, getAdressByIdPessoa } = useContext(AdressContext);
+  const { adressList, attState, getAdressByIdPessoa, deleteAdressByIdEndereco } =
+    useContext(AdressContext);
 
   useEffect(() => {
     getAdressByIdPessoa(state.idPessoa);
-  }, []);
+  }, [attState]);
 
   useEffect(() => {
     console.log(adressList);
@@ -90,7 +91,6 @@ export const Details = () => {
                     {adressList?.map((adress: IPersonAdress) => (
                       <Tr
                         key={adress.idEndereco}
-                        _hover={{ cursor: "pointer" }}
                       >
                         <Td>{adress.cep}</Td>
                         <Td>{adress.cidade}</Td>
@@ -101,7 +101,14 @@ export const Details = () => {
                         <Td>{adress.tipo}</Td>
                         <Td>{adress.pais}</Td>
                         <Td display="flex" flexDir="column" w="100">
-                          <Button colorScheme="red">Excluir</Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={() => {
+                              deleteAdressByIdEndereco(adress.idEndereco);
+                            }}
+                          >
+                            Excluir
+                          </Button>
                           <Button colorScheme="green" mt={1}>
                             Editar
                           </Button>

@@ -29,6 +29,7 @@ export interface IAdressContext {
     idPerson: number,
     adress: IPersonAdress
   ) => Promise<void>;
+  attState: boolean;
   adressList: IPersonAdress[];
 }
 

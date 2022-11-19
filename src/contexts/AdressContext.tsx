@@ -11,6 +11,7 @@ export const AdressContext = createContext({} as IAdressContext);
 export const AdressProvider = ({ children }: IChildren) => {
   const { token } = useContext(AuthContext);
   const [adressList, setAdressList] = useState<IPersonAdress[]>([]);
+  const [attState, setAttState] = useState<boolean>(false);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -76,7 +77,7 @@ export const AdressProvider = ({ children }: IChildren) => {
           },
         })
         .then(() => {
-          navigate("/dashboard/details");
+          setAttState((state) => !state);
 
           toast({
             title: "O usuário foi deletado.",
@@ -143,6 +144,7 @@ export const AdressProvider = ({ children }: IChildren) => {
         deleteAdressByIdEndereco,
         addAdressByIdPessoa,
         adressList,
+        attState
       }}
     >
       {children}
