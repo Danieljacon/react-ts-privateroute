@@ -3,11 +3,16 @@ import { APIBASE } from "../utils/api";
 import { IAdressContext, IChildren, IPersonAdress } from "../utils/interfaces";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+import nProgress from "nprogress";
 
 export const AdressContext = createContext({} as IAdressContext);
 export const AdressProvider = ({ children }: IChildren) => {
   const { token } = useContext(AuthContext);
   const [adressList, setAdressList] = useState<IPersonAdress[]>([]);
+  const navigate = useNavigate();
+  const toast = useToast();
 
   const getAdressByIdPessoa = async (idPessoa: number) => {
     try {
@@ -24,8 +29,41 @@ export const AdressProvider = ({ children }: IChildren) => {
       console.log(error);
     }
   };
+
+  const getAdressByAdress = async (idAdress: number, adress: IPersonAdress) => {
+    nProgress.start();
+    try {
+      axios
+        .put(`${APIBASE}/endereco${idAdress}`, adress, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(() => {
+          navigate("/details");
+
+          toast({
+            title: "O usuário foi editado.",
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+
+      toast({
+        title: "Houve algum erro.",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    } finally {
+      nProgress.done();
+    }
+  };
   return (
-    <AdressContext.Provider value={{ getAdressByIdPessoa, adressList }}>
+    <AdressContext.Provider value={{ getAdressByIdPessoa, getAdressByAdress, adressList }}>
       {children}
     </AdressContext.Provider>
   );

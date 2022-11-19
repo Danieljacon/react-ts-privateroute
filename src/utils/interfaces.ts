@@ -20,6 +20,7 @@ export interface IPeopleContext {
 
 export interface IAdressContext {
   getAdressByIdPessoa: (idPessoa: number) => Promise<void>;
+  getAdressByAdress: (idAdress: number, adress: IPersonAdress) => Promise<void>;
   adressList: IPersonAdress[];
 }
 
@@ -50,7 +51,7 @@ export interface IPeople {
 
 export interface IPersonAdress {
   idEndereco: number;
-  tipo: "RESIDENCIAL, COMERCIAL";
+  tipo: "RESIDENCIAL" | "COMERCIAL";
   logradouro?: string;
   numero: number;
   complemento: string;

@@ -13,5 +13,5 @@ export const Details = () => {
   useEffect(() => {
     console.log(adressList);
   }, [adressList]);
-  return <div>Details</div>;
+  return <div></div>;
 };
