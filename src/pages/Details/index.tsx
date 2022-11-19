@@ -23,8 +23,12 @@ import { IPersonAdress } from "../../utils/interfaces";
 export const Details = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { adressList, attState, getAdressByIdPessoa, deleteAdressByIdEndereco } =
-    useContext(AdressContext);
+  const {
+    adressList,
+    attState,
+    getAdressByIdPessoa,
+    deleteAdressByIdEndereco,
+  } = useContext(AdressContext);
 
   useEffect(() => {
     getAdressByIdPessoa(state.idPessoa);
@@ -89,9 +93,7 @@ export const Details = () => {
                   </Thead>
                   <Tbody>
                     {adressList?.map((adress: IPersonAdress) => (
-                      <Tr
-                        key={adress.idEndereco}
-                      >
+                      <Tr key={adress.idEndereco}>
                         <Td>{adress.cep}</Td>
                         <Td>{adress.cidade}</Td>
                         <Td>{adress.complemento}</Td>
@@ -109,7 +111,18 @@ export const Details = () => {
                           >
                             Excluir
                           </Button>
-                          <Button colorScheme="green" mt={1}>
+                          <Button
+                            colorScheme="green"
+                            mt={1}
+                            onClick={() =>
+                              navigate("/dashboard/details/edit-adress", {
+                                state: {
+                                  ...adress,
+                                  idPessoa: state.idPessoa,
+                                },
+                              })
+                            }
+                          >
                             Editar
                           </Button>
                         </Td>

@@ -38,13 +38,13 @@ export const AdressProvider = ({ children }: IChildren) => {
     nProgress.start();
     try {
       axios
-        .put(`${APIBASE}/endereco${idAdress}`, adress, {
+        .put(`${APIBASE}/endereco/${idAdress}`, adress, {
           headers: {
             Authorization: token,
           },
         })
         .then(() => {
-          navigate("/dashboard/details");
+          navigate(-1);
 
           toast({
             title: "O usuário foi editado.",
