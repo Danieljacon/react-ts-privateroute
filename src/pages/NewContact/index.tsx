@@ -31,13 +31,11 @@ export const NewContact = () => {
 		resolver: yupResolver(schemaContact),
 	});
 	const onSubmit = (data: IContact) => {
-		data.telefone = data.telefone.replace(/[^\d]/g, "");
 		addNeWContact(state.idPessoa, {
 			...data,
 
 			idPessoa: state.idPessoa,
 		});
-		console.log(data);
 	};
 
 	return (
