@@ -17,15 +17,32 @@ import { AdressContext } from "../../contexts/AdressContext";
 import { IPersonAdress } from "../../utils/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaAdress } from "../../utils/schemas";
+import InputMask from "react-input-mask";
 
 export const NewAdress = () => {
   const { state } = useLocation();
   const { addAdressByIdPessoa } = useContext(AdressContext);
 
+  const VIACEP = "https://viacep.com.br/ws/";
+
+  const getAdressByCep = async (cep: string) => {
+    const response = await fetch(`${VIACEP}${cep}/json/`);
+    const data = await response.json();
+    return data;
+  };
+
+  const getValuesByCep = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const data = await getAdressByCep(e.target.value);
+    setValue("logradouro", data.logradouro);
+    setValue("cidade", data.localidade);
+    setValue("estado", data.uf);
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<IPersonAdress>({
     defaultValues: {
       estado: "AC",
@@ -36,7 +53,8 @@ export const NewAdress = () => {
 
   const onSubmit = (data: IPersonAdress) => {
     data.numero = Number(data.numero);
-    data.cep = Number(data.cep);
+    let cpf = data.cep.toString().replace(/\D/g, "");
+    data.cep = Number(cpf);
 
     addAdressByIdPessoa(state.idPessoa, {
       ...data,
@@ -65,7 +83,14 @@ export const NewAdress = () => {
         >
           <div>
             <FormLabel>CEP</FormLabel>
-            <Input type="number" {...register("cep")} min="0" />
+            <Input
+              type="text"
+              as={InputMask}
+              mask="99999-999"
+              {...register("cep")}
+              min="0"
+              onBlur={getValuesByCep}
+            />
             {errors.cep && (
               <Alert status="error" borderRadius={8} mt={1}>
                 <AlertIcon />

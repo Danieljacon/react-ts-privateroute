@@ -22,10 +22,25 @@ import InputMask from "react-input-mask";
 export const EditAdress = () => {
   const { state } = useLocation();
   const { editAdressByEndereco } = useContext(AdressContext);
+  const VIACEP = "https://viacep.com.br/ws/";
+
+  const getAdressByCep = async (cep: string) => {
+    const response = await fetch(`${VIACEP}${cep}/json/`);
+    const data = await response.json();
+    return data;
+  };
+
+  const getValuesByCep = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const data = await getAdressByCep(e.target.value);
+    setValue("logradouro", data.logradouro);
+    setValue("cidade", data.localidade);
+    setValue("estado", data.uf);
+  };
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IPersonAdress>({
     defaultValues: {
@@ -44,13 +59,11 @@ export const EditAdress = () => {
   const onSubmit = (data: IPersonAdress) => {
     data.numero = Number(data.numero);
     let cpf = data.cep.toString().replace(/\D/g, "");
-    // transformar cpf em um numero
     data.cep = Number(cpf);
 
-    // data.cep = Number(data.cep);
     editAdressByEndereco(state.idEndereco, {
-        ...data,
-        idPessoa: state.idPessoa,
+      ...data,
+      idPessoa: state.idPessoa,
     });
   };
 
@@ -75,7 +88,14 @@ export const EditAdress = () => {
         >
           <div>
             <FormLabel>CEP</FormLabel>
-            <Input as={InputMask} mask="99999-999" type="text" {...register("cep")} min="0" />
+            <Input
+              as={InputMask}
+              mask="99999-999"
+              type="text"
+              {...register("cep")}
+              min="0"
+              onBlur={getValuesByCep}
+            />
             {errors.cep && (
               <Alert status="error" borderRadius={8} mt={1}>
                 <AlertIcon />
@@ -192,7 +212,13 @@ export const EditAdress = () => {
             )}
           </div>
 
-          <Button type="submit" w={"full"} colorScheme="messenger" mt={2} gridColumn="span 2">
+          <Button
+            type="submit"
+            w={"full"}
+            colorScheme="messenger"
+            mt={2}
+            gridColumn="span 2"
+          >
             Editar
           </Button>
         </FormControl>
