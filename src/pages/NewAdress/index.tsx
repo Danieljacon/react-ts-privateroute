@@ -53,8 +53,8 @@ export const NewAdress = () => {
 
   const onSubmit = (data: IPersonAdress) => {
     data.numero = Number(data.numero);
-    let cpf = data.cep.toString().replace(/\D/g, "");
-    data.cep = Number(cpf);
+    let cep = data.cep.toString().replace(/\D/g, "");
+    data.cep = Number(cep);
 
     addAdressByIdPessoa(state.idPessoa, {
       ...data,

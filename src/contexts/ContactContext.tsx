@@ -17,6 +17,7 @@ export const ContactProvider = ({ children }: IChildren) => {
 	const navigate = useNavigate();
 
 	const addNeWContact = async (idPerson: number, newContact: IContact) => {
+		
 		try {
 			await axios
 				.post(`${APIBASE}/contato/${idPerson}?idPessoa=${idPerson}`, newContact, {

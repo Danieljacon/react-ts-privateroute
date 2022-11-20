@@ -1,4 +1,3 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
 	Container,
 	Center,
@@ -15,6 +14,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { ContactContext } from "../../contexts/ContactContext";
 import { IContact } from "../../utils/interfaces";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaContact } from "../../utils/schemas";
 import { useLocation } from "react-router-dom";
 import InputMask from "react-input-mask";
@@ -31,6 +31,7 @@ export const NewContact = () => {
 		resolver: yupResolver(schemaContact),
 	});
 	const onSubmit = (data: IContact) => {
+		data.telefone = data.telefone.replace(/[^\d]/g, "");
 		addNeWContact(state.idPessoa, {
 			...data,
 
