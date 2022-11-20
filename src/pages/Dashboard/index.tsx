@@ -1,11 +1,12 @@
 import React, { useEffect, useContext, useState, useMemo } from "react";
 import { PeopleContext } from "../../contexts/PeopleContext";
 import { IPerson } from "../../utils/interfaces";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
   Container,
+  Select,
   Spinner,
   Table,
   Tbody,
@@ -16,10 +17,20 @@ import {
 } from "@chakra-ui/react";
 
 export const Dashboard = () => {
-  const { getPeople, removePerson, peopleList, loading, attState, totalPages } =
+  const { getPeople, peopleList, loading, attState, totalPages } =
     useContext(PeopleContext);
   const [page, setPage] = useState<string>("0");
   const navigate = useNavigate();
+
+  const pages = useMemo(() => {
+    const pageList: number[] = [];
+
+    for (let i = 0; i < totalPages; i++) {
+      pageList.push(i);
+    }
+
+    return pageList;
+  }, [totalPages]);
 
   useEffect(() => {
     getPeople(page);
@@ -55,23 +66,39 @@ export const Dashboard = () => {
                 <Button colorScheme="messenger">
                   <Link to="/dashboard/new-person">Adicionar nova pessoa</Link>
                 </Button>
-                <Box display="flex" alignItems="center" gap={2}>
-                  {page !== "0" && (
-                    <Button
-                      colorScheme="messenger"
-                      onClick={() => setPage((parseInt(page) - 1).toString())}
-                    >
-                      Anterior
-                    </Button>
-                  )}
-                  {peopleList?.totalPages !== parseInt(page) + 1 && (
-                    <Button
-                      colorScheme="messenger"
-                      onClick={() => setPage((parseInt(page) + 1).toString())}
-                    >
-                      Próximo
-                    </Button>
-                  )}
+                <Box
+                  display="grid"
+                  alignItems="center"
+                  gridTemplateColumns="repeat(3, 1fr)"
+                  gap={2}
+                >
+                  <Button
+                    colorScheme="messenger"
+                    onClick={() => setPage((parseInt(page) - 1).toString())}
+                    disabled={parseInt(page) === 0 ? true : false}
+                  >
+                    Anterior
+                  </Button>
+
+                  <Select
+                    value={page}
+                    onChange={(e) => setPage(e.target.value)}
+                    colorScheme="messenger"
+                  >
+                    {pages.map((pageNum) => (
+                      <option key={pageNum} value={pageNum}>
+                        {pageNum + 1}
+                      </option>
+                    ))}
+                  </Select>
+
+                  <Button
+                    colorScheme="messenger"
+                    onClick={() => setPage((parseInt(page) + 1).toString())}
+                    disabled={parseInt(page) === totalPages - 1 ? true : false}
+                  >
+                    Próximo
+                  </Button>
                 </Box>
               </Box>
               <Table
