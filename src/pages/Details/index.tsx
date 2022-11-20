@@ -18,8 +18,9 @@ import {
   Tr,
   TableContainer,
 } from "@chakra-ui/react";
-import { IPersonAdress } from "../../utils/interfaces";
+import { IContact, IPersonAdress } from "../../utils/interfaces";
 import { PeopleContext } from "../../contexts/PeopleContext";
+import { ContactContext } from "../../contexts/ContactContext";
 
 export const Details = () => {
   const { state } = useLocation();
@@ -31,11 +32,23 @@ export const Details = () => {
     deleteAdressByIdEndereco,
   } = useContext(AdressContext);
 
+  const {
+    getContactList,
+		removeContactById,
+		contactList,
+    attStateContact
+
+  } = useContext(ContactContext);
+
   const { removePerson } = useContext(PeopleContext);
 
   useEffect(() => {
     getAdressByIdPessoa(state.idPessoa);
   }, [attState]);
+
+  useEffect(() => {
+    getContactList(state.idPessoa);
+  }, [attStateContact]);
 
   return (
     <Container
@@ -60,6 +73,14 @@ export const Details = () => {
               colorScheme="messenger"
             >
               Adicionar novo endereço
+            </Button>
+            <Button
+              onClick={() =>
+                navigate(`/dashboard/details/new-contact`, { state: state })
+              }
+              colorScheme="messenger"
+            >
+              Adicionar novo contato
             </Button>
           </Box>
           <Box display="flex" gap={2}>
@@ -164,8 +185,74 @@ export const Details = () => {
                 <div>Nenhum dado adicionado!</div>
               )}
             </TabPanel>
+
+            {/* tabela contato */}
+
             <TabPanel>
-              <p>two!</p>
+            {contactList.length > 0 ? (
+                <TableContainer>
+                  <Table
+                    size="sm"
+                    variant="striped"
+                    colorScheme="messenger"
+                    borderRadius={20}
+                    mt={3}
+                    width="100%"
+                    shadow="lg"
+                    opacity="0"
+                    animation="slidein .5s ease-in-out forwards"
+                  >
+                    <Thead>
+                      <Tr>
+                        <Th>Tipo</Th>
+                        <Th>Telefone</Th>
+                        <Th>Descrição</Th>
+                       
+                        <Th textAlign="center">Actions</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {contactList?.map((contact: IContact) => (
+                        <Tr key={contact.idContato}>
+                        <Td>{contact.tipoContato}</Td>
+                        <Td>
+                          {contact.telefone
+                            .toString()
+                            .replace(/(\d{2})(\d{5})(\d{4})/, "$(2)$5-$4")}
+                        </Td>
+                        <Td>{contact.descricao}</Td>
+                        <Td display="flex" flexDir="column" w="100">
+                          <Button
+                            colorScheme="green"
+                            mb={1}
+                            onClick={() =>
+                              navigate("/dashboard/details/edit-contact", {
+                                state: {
+                                  ...contact,
+                                  idPessoa: state.idPessoa,
+                                },
+                              })
+                            }
+                          >
+                            Editar
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={() => {
+                              removeContactById (contact.idContato);
+                            }}
+                          >
+                            Excluir
+                          </Button>
+                        </Td>
+                      </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <div>Nenhum contato adicionado!</div>
+              )}
             </TabPanel>
           </TabPanels>
         </Tabs>

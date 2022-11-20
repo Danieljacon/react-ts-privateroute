@@ -12,19 +12,22 @@ export const ContactContext = createContext({} as IContactContext);
 export const ContactProvider = ({ children }: IChildren) => {
 	const { token } = useContext(AuthContext);
 	const toast = useToast();
-	const [contactList, setContactList] = useState<IContact | null>(null);
+	const [contactList, setContactList] = useState<IContact[]>([]);
+	const [attStateContact, setAttState] = useState<boolean>(false);
 	const navigate = useNavigate();
 
-	const addNeWContact = async (idPessoa: number, newContact: IContact) => {
+	const addNeWContact = async (idPerson: number, newContact: IContact) => {
 		try {
 			await axios
-				.post(`${APIBASE}/contato/{idPessoa}`, newContact, {
+				.post(`${APIBASE}/contato/${idPerson}?idPessoa=${idPerson}`, newContact, {
 					headers: {
 						Authorization: token,
 					},
 				})
 				.then(() => {
-					// navigate("/add-contact");
+					navigate(-1);
+					
+
 					toast({
 						title: "Contato adicionado com sucesso",
 						status: "success",
@@ -36,7 +39,7 @@ export const ContactProvider = ({ children }: IChildren) => {
 			console.log(error);
 
 			toast({
-				title: "Houve algum erro, contato não pode ser criado.",
+				title: "Houve algum erro, contato não pode ser adiconado.",
 				status: "error",
 				duration: 6000,
 				isClosable: true,
@@ -46,7 +49,7 @@ export const ContactProvider = ({ children }: IChildren) => {
 	const getContactList = async (idPessoa: number) => {
 		try {
 			await axios
-				.get(`${APIBASE}/contato/{idPessoa}`, {
+				.get(`${APIBASE}/contato/${idPessoa}`, {
 					headers: {
 						Authorization: token,
 					},
@@ -59,23 +62,25 @@ export const ContactProvider = ({ children }: IChildren) => {
 		}
 	};
 
-	const editContactById = async (idPessoa: number, contact: IContact) => {
-		//precisa pegar a pessoa com contato, tem q alterar a requisição no peoleContext
+	const editContactById = async (idContact: number, contact: IContact) => {
+		
 		try {
-			await axios.put(`${APIBASE}/contato/{contact.id}`,{
-				headers: {
-					Authorization: token,
-				},
-			})
-			.then (() => {
-				toast({
-					title: "Contato editado com sucesso.",
-					status: "success",
-					duration: 6000,
-					isClosable: true,
+			await axios
+				.put(`${APIBASE}/contato/${idContact}`, contact, {
+					headers: {
+						Authorization: token,
+					},
+				})
+				.then(() => {
+					navigate(-1);
+					toast({
+						title: "Contato editado com sucesso.",
+						status: "success",
+						duration: 6000,
+						isClosable: true,
+					});
+					
 				});
-				// navigate(pagina da pessoa mostrando os contatos);
-			})
 		} catch (error) {
 			console.log(error);
 			toast({
@@ -87,13 +92,24 @@ export const ContactProvider = ({ children }: IChildren) => {
 		}
 	};
 
-	const removeContactById = async (idPessoa: number, contact: IContact) => {
+	const removeContactById = async (idContact: number) => {
 		try {
-			await axios.delete(`${APIBASE}/contato/{contact.id}`, {
-				headers: {
-					Authorization: token,
-				},
-			});
+			await axios
+				.delete(`${APIBASE}/contato/${idContact}`, {
+					headers: {
+						Authorization: token,
+					},
+				})
+				.then(() => {
+					setAttState((state) => !state);
+
+					toast({
+						title: "O contato foi deletado.",
+						status: "success",
+						duration: 6000,
+						isClosable: true,
+					  });
+				});
 		} catch (error) {
 			console.log(error);
 		}
@@ -106,6 +122,7 @@ export const ContactProvider = ({ children }: IChildren) => {
 				editContactById,
 				removeContactById,
 				contactList,
+				attStateContact
 			}}
 		>
 			{children}

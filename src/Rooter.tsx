@@ -13,6 +13,9 @@ import { Details } from "./pages/Details";
 import { AdressProvider } from "./contexts/AdressContext";
 import { NewAdress } from "./pages/NewAdress";
 import { EditAdress } from "./pages/EditAdress";
+import { ContactProvider } from "./contexts/ContactContext";
+import { NewContact } from "./pages/NewContact";
+import { EditContact } from "./pages/EditContact";
 
 export const Router = () => {
   return (
@@ -22,6 +25,7 @@ export const Router = () => {
           <AuthProvider>
             <PeopleProvider>
               <AdressProvider>
+                <ContactProvider>
                 <Routes>
                   <Route path="/" element={<Login />} />
                   <Route path="/register" element={<Register />} />
@@ -39,13 +43,24 @@ export const Router = () => {
                     <Route
                       path="/dashboard/details/new-adress"
                       element={<NewAdress />}
+
                     />
                     <Route
                       path="/dashboard/details/edit-adress"
                       element={<EditAdress />}
                     />
+                    <Route
+                      path="/dashboard/details/new-contact"
+                      element={<NewContact />}
+                    />
+                    <Route
+                      path="/dashboard/details/edit-contact"
+                      element={<EditContact/>}
+                    />
+                    
                   </Route>
                 </Routes>
+                </ContactProvider>
               </AdressProvider>
             </PeopleProvider>
           </AuthProvider>

@@ -22,8 +22,9 @@ export interface IContactContext {
   addNeWContact: (idPessoa: number, newContact: IContact) => Promise<void>;
   getContactList: (idPessoa: number) => Promise<void>;
   editContactById: (idPessoa: number, contact: IContact) => Promise<void>;
-  removeContactById: (idPessoa: number, contact: IContact) => Promise<void>;
-  contactList: IContact | null;
+  removeContactById: (idContact: number) => Promise<void>;
+  contactList: IContact[];
+  attStateContact: boolean
 }
 
 export interface IAdressContext {
@@ -68,9 +69,10 @@ export interface IPeople {
 
 export interface IContact {
   idPessoa: number;
-  tipoContato: string;
+  tipoContato: "RESIDENCIAL" | "COMERCIAL";
   telefone: string;
   descricao: string;
+  idContato: number;
 }
 
 export interface IPersonAdress {
