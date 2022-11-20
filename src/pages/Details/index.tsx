@@ -17,6 +17,10 @@ import {
   Thead,
   Tr,
   TableContainer,
+  Stat,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
 } from "@chakra-ui/react";
 import { IContact, IPersonAdress } from "../../utils/interfaces";
 import { PeopleContext } from "../../contexts/PeopleContext";
@@ -32,13 +36,8 @@ export const Details = () => {
     deleteAdressByIdEndereco,
   } = useContext(AdressContext);
 
-  const {
-    getContactList,
-		removeContactById,
-		contactList,
-    attStateContact
-
-  } = useContext(ContactContext);
+  const { getContactList, removeContactById, contactList, attStateContact } =
+    useContext(ContactContext);
 
   const { removePerson } = useContext(PeopleContext);
 
@@ -48,6 +47,7 @@ export const Details = () => {
 
   useEffect(() => {
     getContactList(state.idPessoa);
+    console.log(state);
   }, [attStateContact]);
 
   return (
@@ -59,6 +59,35 @@ export const Details = () => {
       animation="slidein 1s ease-in-out forwards"
     >
       <Box p={10} borderRadius={20} width="100%" shadow="lg">
+        <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={4} my={2}>
+          <Stat>
+            <StatNumber color="messenger.500" textAlign="end">
+              Email
+            </StatNumber>
+            <StatHelpText textAlign="end">{state.email}</StatHelpText>
+          </Stat>
+          <Stat>
+            <StatNumber color="messenger.500">CPF</StatNumber>
+            <StatHelpText>
+              {state.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
+            </StatHelpText>
+          </Stat>
+          <Stat>
+            <StatNumber color="messenger.500" textAlign="end">
+              Nome
+            </StatNumber>
+            <StatHelpText textAlign="end">{state.nome}</StatHelpText>
+          </Stat>
+          <Stat>
+            <StatNumber color="messenger.500">Data de Nascimento</StatNumber>
+            <StatHelpText>
+              {state.dataNascimento.replace(
+                /(\d{4})-(\d{2})-(\d{2})/,
+                "$3/$2/$1"
+              )}
+            </StatHelpText>
+          </Stat>
+        </Box>
         <Box
           display="flex"
           alignItems="center"
@@ -189,7 +218,7 @@ export const Details = () => {
             {/* tabela contato */}
 
             <TabPanel>
-            {contactList.length > 0 ? (
+              {contactList.length > 0 ? (
                 <TableContainer>
                   <Table
                     size="sm"
@@ -207,45 +236,45 @@ export const Details = () => {
                         <Th>Tipo</Th>
                         <Th>Telefone</Th>
                         <Th>Descrição</Th>
-                       
+
                         <Th textAlign="center">Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
                       {contactList?.map((contact: IContact) => (
                         <Tr key={contact.idContato}>
-                        <Td>{contact.tipoContato}</Td>
-                        <Td>
-                          {contact.telefone
-                            .toString()
-                            .replace(/(\d{2})(\d{5})(\d{4})/, "$(2)$5-$4")}
-                        </Td>
-                        <Td>{contact.descricao}</Td>
-                        <Td display="flex" flexDir="column" w="100">
-                          <Button
-                            colorScheme="green"
-                            mb={1}
-                            onClick={() =>
-                              navigate("/dashboard/details/edit-contact", {
-                                state: {
-                                  ...contact,
-                                  idPessoa: state.idPessoa,
-                                },
-                              })
-                            }
-                          >
-                            Editar
-                          </Button>
-                          <Button
-                            colorScheme="red"
-                            onClick={() => {
-                              removeContactById (contact.idContato);
-                            }}
-                          >
-                            Excluir
-                          </Button>
-                        </Td>
-                      </Tr>
+                          <Td>{contact.tipoContato}</Td>
+                          <Td>
+                            {contact.telefone
+                              .toString()
+                              .replace(/(\d{2})(\d{5})(\d{4})/, "$(2)$5-$4")}
+                          </Td>
+                          <Td>{contact.descricao}</Td>
+                          <Td display="flex" flexDir="column" w="100">
+                            <Button
+                              colorScheme="green"
+                              mb={1}
+                              onClick={() =>
+                                navigate("/dashboard/details/edit-contact", {
+                                  state: {
+                                    ...contact,
+                                    idPessoa: state.idPessoa,
+                                  },
+                                })
+                              }
+                            >
+                              Editar
+                            </Button>
+                            <Button
+                              colorScheme="red"
+                              onClick={() => {
+                                removeContactById(contact.idContato);
+                              }}
+                            >
+                              Excluir
+                            </Button>
+                          </Td>
+                        </Tr>
                       ))}
                     </Tbody>
                   </Table>
