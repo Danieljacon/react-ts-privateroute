@@ -54,9 +54,8 @@ export const NewContact = () => {
 					p={10}
 					borderRadius={20}
 					shadow="lg"
-					display="grid"
-					gridGap={5}
-					gridTemplateColumns="repeat(2, 1fr)"
+					display="flex"
+					flexDir="column"
 				>
 					<div>
 						<FormLabel>Tipo</FormLabel>

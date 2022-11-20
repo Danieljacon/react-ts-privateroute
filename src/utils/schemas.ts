@@ -59,15 +59,12 @@ export const schemaAdress = yup.object().shape({
 
 export const schemaContact = yup
   .object({
-    tipoContato: yup
-      .string()
-      .required("O tipo não pode ser vazio."),
     telefone: yup.string().required("O telefone precisa ser válido.")
-    .min(11, "O telefone deve ter no mínimo 11 caracteres"),
+    .required("O telefone é obrigatório para adicionar o contato")
+    .min(14, "O telefone deve ter no mínimo 14 caracteres"),
     descricao: yup
       .string()
-      .required("O CPF não pode ser vazio.")
+      .required("O descrição não pode ser vazia.")
       .min(3, "A descrição deve ter no mínimo 3 caracteres"),
   
-  })
-  .required();
+  }).required();
