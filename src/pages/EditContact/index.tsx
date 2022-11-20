@@ -58,9 +58,8 @@ export const EditContact = () => {
         p={10}
         borderRadius={20}
         shadow="lg"
-        display="grid"
-        gridGap={5}
-        gridTemplateColumns="repeat(2, 1fr)"
+        display="flex"
+        flexDir="column"
       >
         <div>
           <FormLabel>Tipo</FormLabel>
@@ -68,18 +67,6 @@ export const EditContact = () => {
             <option value="RESIDENCIAL">Residencial</option>
             <option value="COMERCIAL">Comercial</option>
           </Select>
-        </div>
-        <div>
-          <FormLabel>Descrição</FormLabel>
-          <Input type="text" {...register("descricao")} min="0" />
-          {errors.descricao && (
-            <Alert status="error" borderRadius={8} mt={1}>
-              <AlertIcon />
-              <AlertTitle>
-                {errors.descricao.message}
-              </AlertTitle>
-            </Alert>
-          )}
         </div>
 
         <div>
@@ -101,6 +88,19 @@ export const EditContact = () => {
         </div>
 
         <div>
+          <FormLabel>Descrição</FormLabel>
+          <Input type="text" {...register("descricao")} min="0" />
+          {errors.descricao && (
+            <Alert status="error" borderRadius={8} mt={1}>
+              <AlertIcon />
+              <AlertTitle>
+                {errors.descricao.message}
+              </AlertTitle>
+            </Alert>
+          )}
+        </div>
+        
+        <div>
           {errors.tipoContato && (
             <Alert status="error" borderRadius={8} mt={1}>
               <AlertIcon />
@@ -117,7 +117,7 @@ export const EditContact = () => {
           colorScheme="messenger"
           mt={2}
         >
-          Adicionar
+          Editar
         </Button>
       </FormControl>
     </Center>
