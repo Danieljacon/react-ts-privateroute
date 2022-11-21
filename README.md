@@ -24,5 +24,6 @@ Trata-se de um sistema de cadastros de usuários e de informações como endere�
 3) Iniciar o servidor de desenvolvimento: <strong>npm start</strong>;
 
 ## Video do projeto:
-<strong>Clique na imagem para assistir</strong>
-[![Assista o video](./src/assets/to_readme/screen.png)](./src/assets/to_readme/video.mkv)
+<p>
+    <img width="700" src="./src/assets/to_readme/gif.gif">
+</p>
