@@ -23,7 +23,7 @@ Trata-se de um sistema de cadastros de usuários e de informações como endere�
 2) Iniciar o Node Modules na pasta do projeto: <strong>npm install</strong>;
 3) Iniciar o servidor de desenvolvimento: <strong>npm start</strong>;
 
-## Video do projeto:
+## GIF do projeto:
 <p>
     <img width="700" src="./src/assets/to_readme/gif.gif">
 </p>
